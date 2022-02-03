@@ -7,15 +7,23 @@ import hello.core.member.MemberServiceImpl;
 import hello.core.order.Order;
 import hello.core.order.OrderService;
 import hello.core.order.OrderServiceImpl;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 //test
 public class OrderApp {
     public static void main(String[] args) {
 
 
+//        AppConfig appConfig = new AppConfig();
+//        MemberService memberService = appConfig.memberService();
+//        OrderService orderService = appConfig.orderService();
         //테스트 해보기 -> 자바로 구현 --> test/member/MemberServiceTest로 대신할 수 있음
-        MemberService memberService=new MemberServiceImpl();
-        OrderService orderService = new OrderServiceImpl();
+
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
+        MemberService memberService = applicationContext.getBean("memberService",MemberService.class);
+        OrderService orderService = applicationContext.getBean("orderService",OrderService.class);
+
 
         Long memberId=1L;
         Member member = new Member(memberId, "memberA", Grade.VIP);
